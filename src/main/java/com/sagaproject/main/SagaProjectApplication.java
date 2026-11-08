@@ -1,4 +1,4 @@
-package com.saga_project.main;
+package com.sagaproject.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

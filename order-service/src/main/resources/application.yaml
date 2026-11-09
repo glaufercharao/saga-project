@@ -1,5 +1,25 @@
 spring:
   application:
     name: order-service
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    topic:
+      teste: teste
+    consumer:
+      group-id: order-group
+      auto-offset-reset: latest
+
+  data:
+     mongodb:
+     uri: mongodb://admin:123456@localhost:27017
+     database: admin
+
 server:
   port: 3000
+
+logging:
+  level:
+    org:
+      apache:
+        kafka: OFF

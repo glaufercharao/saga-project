@@ -1,7 +1,7 @@
 version: '3'
 services:
   order-db:
-    image: mongo:latest
+    image: mongo:8.2.5
     container_name: order-db
     restart: always
     networks:
@@ -9,6 +9,8 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=123456
+    ports:
+      - 27017:27017
 
   product-db:
     container_name: product-db

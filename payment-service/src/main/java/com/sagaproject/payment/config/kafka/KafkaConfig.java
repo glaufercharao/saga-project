@@ -1,6 +1,7 @@
 package com.sagaproject.payment.config.kafka;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -33,11 +34,21 @@ public class KafkaConfig {
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     private String autoOffsetReset;
 
+    @Value("${spring.kafka.topic.orchestrator}")
+    private String orchestrator;
+
     @Value("${spring.kafka.topic.payment-success}")
     private String paymentSuccessTopic;
 
     @Value("${spring.kafka.topic.payment-fail}")
     private String paymentFailTopic;
+
+    @Bean
+    public KafkaAdmin kafkaAdmin() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        return new KafkaAdmin(props);
+    }
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
@@ -53,6 +64,12 @@ public class KafkaConfig {
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
        return new KafkaTemplate<>(producerFactory);
     }
+
+    @Bean
+    public NewTopic orchestratorTopic() {
+        return buildTopic(orchestrator);
+    }
+
     @Bean
     public NewTopic paymentSuccessTopic() {
         return buildTopic(paymentSuccessTopic);

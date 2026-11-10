@@ -1,6 +1,7 @@
 package com.sagaproject.order.config.kafka;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -38,6 +39,13 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.topic.notify-ending}")
     private String notifyEndingTopic;
+
+    @Bean
+    public KafkaAdmin kafkaAdmin() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        return new KafkaAdmin(props);
+    }
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {

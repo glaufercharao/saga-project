@@ -1,6 +1,6 @@
 package com.sagaproject.productvalidation.core.dto;
 
-import com.sagaproject.order.core.document.OrderProduct;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -44,13 +44,6 @@ public class KafkaConfig {
     private String paymentFailTopic;
 
     @Bean
-    public KafkaAdmin kafkaAdmin() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        return new KafkaAdmin(props);
-    }
-
-    @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerProps());
     }

@@ -14,12 +14,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collation = "event")
+@Document(collection = "event")
 public class Event {
 
     @Id
     private String id;
-    private String eventId;
     private String transactionId;
     private String orderId;
     private Order payload;

@@ -11,10 +11,9 @@ spring:
       group-id: order-group
       auto-offset-reset: latest
 
-  data:
-     mongodb:
-     uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27017}
-     database: admin
+  mongodb:
+    database: admin
+    uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27017}
 
 server:
   port: 3000

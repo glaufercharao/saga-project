@@ -1,5 +1,6 @@
 package com.sagaproject.order.core.consumer;
 
+import com.sagaproject.order.core.service.EventService;
 import com.sagaproject.order.core.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventConsumer {
 
+    private EventService eventService;
     private final JsonUtil jsonUtil;
 
     @KafkaListener(
@@ -22,6 +24,6 @@ public class EventConsumer {
 
         log.info("Received notify ending event: {}", payload);
         var event = jsonUtil.toEvent(payload);
-        log.info(event.toString());
+        eventService.notifyEnding(event);
     }
 }

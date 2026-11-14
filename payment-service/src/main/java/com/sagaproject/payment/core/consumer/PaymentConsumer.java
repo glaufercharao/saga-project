@@ -1,6 +1,7 @@
 package com.sagaproject.payment.core.consumer;
 
 
+import com.sagaproject.payment.core.service.PaymentService;
 import com.sagaproject.payment.core.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,28 +12,26 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class PaymentConsumer {
-
+    private final PaymentService paymentService;
     private final JsonUtil jsonUtil;
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
             topics = "${spring.kafka.topic.payment-success}"
     )
-    public void consumePaymentSuccess(String payload){
-
-        log.info("Received payment success event: {}", payload);
+    public void consumeSuccessEvent(String payload) {
+        log.info("Receiving success event {} from payment-success topic", payload);
         var event = jsonUtil.toEvent(payload);
-        log.info(event.toString());
+        paymentService.realizePayment(event);
     }
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
             topics = "${spring.kafka.topic.payment-fail}"
     )
-    public void consumePaymentFail(String payload){
-
-        log.info("Received rollback payment fail event: {}", payload);
+    public void consumeFailEvent(String payload) {
+        log.info("Receiving rollback event {} from payment-fail topic", payload);
         var event = jsonUtil.toEvent(payload);
-        log.info(event.toString());
+        paymentService.realizeRefund(event);
     }
 }

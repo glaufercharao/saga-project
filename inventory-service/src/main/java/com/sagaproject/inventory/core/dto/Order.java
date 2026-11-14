@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Order {
 
-    private String orderId;
+    private String id;
     private List<OrderProduct> products;
     private LocalDateTime  createdAt;
     private String transactionId;
